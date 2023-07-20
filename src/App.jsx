@@ -1,37 +1,38 @@
+import { useEffect, useState } from "react";
 import "./App.css";
 import Card from "./components/Card/Card";
 
-const item1 = {
-  nome: "Rick Sanchez",
-  imagem:
-    "https://static.tvtropes.org/pmwiki/pub/images/abcb6534_7913_4eb1_a7a5_62b081ebc628.png",
-};
 
-const item2 = {
-  nome: "Morty Smith",
-  imagem:
-    "https://comicvine.gamespot.com/a/uploads/scale_medium/6/66303/4469088-tumblr_inline_n0aleph3fl1r8rr6o.jpg",
-};
-
-const item3 = {
-  nome: "Summer Smith",
-  imagem:
-    "https://images.squarespace-cdn.com/content/v1/5616ac17e4b018d366f57f53/1616952566614-0IEBMBBMXMO30Z37PTMN/summer+smith+soundboard",
-};
-
-const itens = [item1, item2, item3];
-
-
-async function carregarDadosApi() {
-  const apiUrl = "https://ocean-api-itens.onrender.com/itens"
-  const response = await fetch(apiUrl);
-  const body = await response.json()
-  console.log(body);
-}
-
-carregarDadosApi();
+//Objetos em uma lista
+//const itens = [];
+// const item1 = {
+//   nome: "Rick Sanchez",
+//   imagem:
+//     "https://static.tvtropes.org/pmwiki/pub/images/abcb6534_7913_4eb1_a7a5_62b081ebc628.png",
+// };
 
 function App() {
+  //useState = Hook de Estado determina qual o estado de uma informação
+  const [itens, setItens] = useState([]);
+ console.log("itens", itens);
+
+  async function carregarDadosApi() {
+    const apiUrl = "https://ocean-api-itens.onrender.com/itens"
+    //fetch = Promise -> toda promise deve ser resolvida para trabalhar com valor
+    const response = await fetch(apiUrl);
+    const body = await response.json()
+    console.log(body);
+
+    setItens(body);
+  }
+
+  //useEffect = controla uma função
+  useEffect(function (){
+ 
+    carregarDadosApi();
+
+  }, []);
+
   return (
     <>
       <div className="cards-list">
